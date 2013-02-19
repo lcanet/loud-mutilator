@@ -1,0 +1,402 @@
+<!doctype html>
+
+
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=1024"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>SQLI presentation</title>
+
+    <meta name="author" content="Laurent Canet"/>
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic"
+          rel="stylesheet"/>
+
+    <link href="css/impress-demo.css" rel="stylesheet"/>
+    <link href="css/sqli.css" rel="stylesheet"/>
+    <link href="css/shCore.css" rel="stylesheet"/>
+    <link href="css/shThemeDjango.css" rel="stylesheet"/>
+
+    <link rel="shortcut icon" href="favicon.png"/>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+</head>
+
+<body class="impress-not-supported">
+
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified
+        version of this presentation.</p>
+
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<div id="impress">
+
+<div id="titre" class="step sqli_titre" data-x="-2000" data-y="0">
+    <h1>angular js</h1>
+
+    <h2>cellule js/ria - février 2013</h2>
+</div>
+
+<div id="angular-pres" class="step slide slide_classique" data-scale="2" data-x="5000" data-y="5000" data-rotate="90">
+    <img src="img/angularjs.png" width="350" style="margin-left: 200px; margin-top: 20px; margin-bottom: 100px"/>
+    <ul>
+        <li>
+            Framework complet de développement d'applications web <em>single-page</em>
+
+        </li>
+        <li>
+            Orientation <em>applications de gestion </em> (formulaires, tables, listes) : industrialisation et productivité
+
+        </li>
+        <li>
+            Etiquette google
+        </li>
+
+    </ul>
+
+</div>
+
+
+<div id="angular-core1" class="step slide slide_classique" data-scale="2" data-x="7000" data-y="5000">
+    <p class="titre">
+        Concepts clé: <em>MVC</em>
+    </p>
+
+    <p class="sous_titre">
+        Séparation de responsabilité entre les couches de l'application
+    </p>
+
+    <ul>
+        <li>
+            Templates d'écran sans logique (pure DOM HTML)
+        </li>
+        <li>
+            Modèle de données (purs objets javascript)
+        </li>
+        <li>
+            Elements de logiques unitaire (controlleurs, services), séparés clairement
+            de la vue, testables
+        </li>
+    </ul>
+
+</div>
+
+<div id="angular-view" class="step slide slide_classique" data-scale="2" data-x="9000" data-y="5000">
+    <p class="titre">
+        Vues
+    </p>
+    <ul>
+        <li>
+            <b>Modèle déclaratif: </b> repetitions, affichage conditionnel avec des attributs <b>ng-*</b>
+        </li>
+        <li>
+            Interaction utilisateurs avec des gestionnaires d'évènements <b>ng-*</b> ( ng-click, ng-init)
+        </li>
+        <li>
+            Composants utilisateurs (directives) : constructions HTML dédiées
+        </li>
+
+    </ul>
+
+
+    <script type="syntaxhighlighter" class="brush: xml"><![CDATA[
+        <div ng-controller="TodoCtrl">
+            <span>{{todos.length}} remaining</span>
+            [ <a href="" ng-show="isArchiveAvailable" ng-click="doArchives()">archive</a> ]
+            <ul>
+                <li ng-repeat="todo in todos">
+                    {{todo.text}}
+                </li>
+            </ul>
+        </div>
+        ]]>
+    </script>
+</div>
+
+
+<div id="angular-ctrl" class="step slide slide_classique" data-scale="2" data-x="11000" data-y="5000">
+    <p class="titre">
+        Controlleurs
+    </p>
+    <ul>
+        <li>
+            Pur javascript.
+        </li>
+        <li>
+            <b>Pas de référence à la vue</b> : Vues multiples (mobile, desktop), testable
+        </li>
+        <li>
+            Pas de référence direct au framework par héritage. Services <b>$-</b> injetés par IOC
+        </li>
+
+    </ul>
+
+
+    <script type="syntaxhighlighter" class="brush: js"><![CDATA[
+        function TodoCtrl($scope) {
+            $scope.todos = [
+                {text:'learn angular', done:true},
+                {text:'build an angular app', done:false}];
+
+            $scope.doArchives = function() {
+                alert('gogo-gadget à la todolist');
+            };
+
+            $scope.isArchiveAvailable = function() {
+                return true;
+            };
+        }
+    </script>
+</div>
+
+
+<div id="angular-binding" class="step slide slide_classique" data-scale="2" data-x="13000" data-y="5000">
+    <p class="titre">
+        Two-way data binding
+    </p>
+    <img src="img/Two_Way_Data_Binding.png"/>
+    <script type="syntaxhighlighter" class="brush: js"><![CDATA[
+        function TodoCtrl($scope) {
+            $scope.form.name = 'Laurent';
+        }
+    </script>
+    <script type="syntaxhighlighter" class="brush: html"><![CDATA[
+        <div ng-controller="TodoCtrl">
+            <input type="text" ng-model="form.name" required/>
+        </div>
+    </script>
+
+</div>
+
+
+<div id="angular-binding2" class="step slide slide_classique" data-scale="2" data-x="15000" data-y="5000">
+    <p class="titre">
+        Data binding
+    </p>
+    <ul>
+        <li>
+            Binding bi-directionnel pour les éléments de formulaires (form/input)
+        </li>
+        <li>
+            Vrai binding avec un sens logique clairement identifié. Le modèle est la source primaire
+        </li>
+        <li>
+            Basé sur du dirty checking. Pas de gestion d'évenements "change" manuelle.
+        </li>
+        <li>
+            Fonctionne sans accesseurs spécifique ou wrapper (a la backbone / ember)
+            <em>Model.get('name')</em>
+        </li>
+        <li>
+            Nécessite parfois un rafraichissement manuel (<em>$scope.$digest() / $apply()</em>)
+        </li>
+    </ul>
+
+
+</div>
+
+<div id="angular-structure" class="step slide slide_classique" data-scale="2" data-x="17000" data-y="5000">
+    <p class="titre">
+        Structuration de l'application
+    </p>
+    <ul>
+        <li>
+            Angular utilise l'IOC (inversion de contrôle) en plus du pattern MVC.
+        </li>
+        <li>
+            <b>convention-based</b> : les services de l'API sont préfixé par $. Les services applicatifs injecté
+            par leur nom.
+        </li>
+        <li>
+            Gestion single-page : routing intra-applicatif (hash de l'url -gt;Une page + Un controlleur)
+        </li>
+
+    </ul>
+
+    <script type="syntaxhighlighter" class="brush: js"><![CDATA[
+        angular.module('MyApp').service('MyService', function(){
+        //... constructor of the singleton service
+        });
+
+        function TodoCtrl($scope, $http, MyService) {
+        // this controller may use the service provided : $scope (model), $http
+        // and a custom service
+        }
+
+    </script>
+
+</div>
+
+<div id="angular-reuse" class="step slide slide_classique" data-scale="2" data-x="19000" data-y="5000">
+    <p class="titre">
+        Composants réutilisables
+    </p>
+
+    <p class="sous_titre">
+        Possibilité d'inclure des composants réutilisables : <em>filtres </em> (evaluation d'expression),
+        services, ou vrai <em>composants </em> d'IHM avec leur logique (tags HTML custom)
+    </p>
+
+    <script type="syntaxhighlighter" class="brush: js"><![CDATA[
+        angular.module('sampleApp', []).
+           filter('toLower', function(){
+             return function(input) {
+                return input.toLowerCase();
+             }
+        });
+    </script>
+    <script type="syntaxhighlighter" class="brush: xml"><![CDATA[
+        <span>{{model.nom | toLower}} </span>
+    </script>
+
+</div>
+
+<div id="angular-components" class="step slide slide_classique" data-scale="2" data-x="21000" data-y="5000">
+    <p class="titre">
+        Angular réinvente le HTML
+    </p>
+
+    <p class="sous_titre">
+        Les <b>directives</b> permettent d'ajouter du comportement aux balises HTML
+    </p>
+
+    <script type="syntaxhighlighter" class="brush: js"><![CDATA[
+        angular.module('sampleApp').
+            directive('monComponent', function(){
+                return {
+                    restrict: 'E', // 'A' for attributes
+                    template: '<span>hello</span>'
+                };
+        });
+    </script>
+    <script type="syntaxhighlighter" class="brush: xml"><![CDATA[
+        <div id="container">
+            <mon-component></mon-component>
+
+        </div>
+    </script>
+
+</div>
+
+<div id="angular-test" class="step slide slide_classique" data-scale="2" data-x="23000" data-y="5000">
+    <p class="titre">
+        Tests
+    </p>
+
+    <ul>
+        <li>
+            Le découplage entre composants permet de tester unitairement les éléments (controlleurs, directives, etc)
+        </li>
+        <li>
+            Une librairie permet de piloter les interactions pour réaliser des tests fonctionnels
+
+        </li>
+    </ul>
+
+    <script type="syntaxhighlighter" class="brush: js"><![CDATA[
+        describe('Filtrage', function() {
+            it("L'utilisateur filtre les données", function() {
+                input('search').enter('produit');
+                element(':button').click();
+                expect(repeater('ul li').count()).toEqual(10);
+            });
+        });
+    </script>
+
+</div>
+
+
+<div id="angular-swot" class="step slide slide_swot" data-scale="4" data-rotate="30" data-x="19000" data-y="9000">
+    <table class="swot">
+        <tr>
+            <td class="swot_s">
+                <ul>
+                    <li>
+                        Elements d'architectures éprouvés (IOC, MVC, binding)
+                    </li>
+                    <li>
+                        Intégré tout en étant peu invasif
+                    </li>
+                    <li>
+                        Documentation concise et centralisée
+                    </li>
+
+                </ul>
+
+            </td>
+            <td class="swot_w">
+                <ul>
+                    <li>
+                        Pas encore un framework complet (composants UI)
+                    </li>
+                    <li>
+                        Syntaxes parfois rédhibitoires (pas de ternaire, transclusion)
+                    </li>
+                </ul>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td class="swot_o">
+
+                <ul>
+                    <li>Ecosystème en cours de construction
+                        (Angular-UI)
+                    </li>
+                    <li>
+                        Courbe d'apprentissage équilibrée
+                    </li>
+                    <li>
+                        Audience d'une technologie google
+                    </li>
+                </ul>
+            </td>
+            <td class="swot_t">
+                <ul>
+                    <li>
+                        Support navigateur limité (IE 7-8)
+
+                    </li>
+                    <li>
+                        Evolution rapide et massive
+                    </li>
+                </ul>
+
+            </td>
+
+        </tr>
+
+    </table>
+
+
+</div>
+
+<div id="fin" class="step slide slide_message" data-scale="4" data-x="50000" data-y="50000">
+    <p>
+        questions?
+    </p>
+
+</div>
+
+<script>
+    if ("ontouchstart" in document.documentElement) {
+        document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+    }
+</script>
+
+<script src="js/impress.js"></script>
+<script src="js/shCore.js"></script>
+<script src="js/shBrushJScript.js"></script>
+<script src="js/shBrushXml.js"></script>
+<script>
+    impress().init();
+    SyntaxHighlighter.all();
+</script>
+
+
+</body>
+</html>
+
