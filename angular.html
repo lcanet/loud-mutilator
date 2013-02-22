@@ -16,7 +16,7 @@
     <link href="css/impress-demo.css" rel="stylesheet"/>
     <link href="css/sqli.css" rel="stylesheet"/>
     <link href="css/shCore.css" rel="stylesheet"/>
-    <link href="css/shThemeDjango.css" rel="stylesheet"/>
+    <link href="css/shThemeEmacs.css" rel="stylesheet"/>
 
     <link rel="shortcut icon" href="favicon.png"/>
     <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
@@ -61,11 +61,11 @@
 
 <div id="angular-core1" class="step slide slide_classique" data-scale="2" data-x="7000" data-y="5000">
     <p class="titre">
-        Concepts clé: <em>MVC</em>
+        Des concepts clés
     </p>
 
     <p class="sous_titre">
-        Séparation de responsabilité entre les couches de l'application
+        MVC et séparation claire de responsabilité entre les couches de l'application
     </p>
 
     <ul>
@@ -73,11 +73,13 @@
             Templates d'écran sans logique (pure DOM HTML)
         </li>
         <li>
-            Modèle de données (purs objets javascript)
+            Modèle de données (objets javascripts simple)
         </li>
         <li>
-            Elements de logiques unitaire (controlleurs, services), séparés clairement
-            de la vue, testables
+            Elements de logiques unitaire (controlleurs, services), sans référence de la vue, testables
+        </li>
+        <li>
+            Simplicité de mise en oeuvre
         </li>
     </ul>
 
@@ -85,11 +87,11 @@
 
 <div id="angular-view" class="step slide slide_classique" data-scale="2" data-x="9000" data-y="5000">
     <p class="titre">
-        Vues
+        Le grand retour du HTML
     </p>
     <ul>
         <li>
-            <b>Modèle déclaratif: </b> repetitions, affichage conditionnel avec des attributs <b>ng-*</b>
+            <b>Modèle déclaratif: </b> répétitions, affichage conditionnel avec des attributs <b>ng-*</b>
         </li>
         <li>
             Interaction utilisateurs avec des gestionnaires d'évènements <b>ng-*</b> ( ng-click, ng-init)
@@ -140,17 +142,16 @@
                 {text:'learn angular', done:true},
                 {text:'build an angular app', done:false}];
 
-            $scope.doArchives = function() {
+            var doArchives = function() {
                 alert('gogo-gadget à la todolist');
             };
-
+            $scope.doArchives = doArchives;
             $scope.isArchiveAvailable = function() {
                 return true;
             };
         }
     </script>
 </div>
-
 
 <div id="angular-binding" class="step slide slide_classique" data-scale="2" data-x="13000" data-y="5000">
     <p class="titre">
@@ -206,7 +207,7 @@
             Angular utilise l'IOC (inversion de contrôle) en plus du pattern MVC.
         </li>
         <li>
-            <b>convention-based</b> : les services de l'API sont préfixé par $. Les services applicatifs injecté
+            les services de l'API sont préfixé par $. Les services applicatifs injecté
             par leur nom.
         </li>
         <li>
@@ -290,7 +291,7 @@
             Le découplage entre composants permet de tester unitairement les éléments (controlleurs, directives, etc)
         </li>
         <li>
-            Une librairie permet de piloter les interactions pour réaliser des tests fonctionnels
+            Une librairie permet de piloter les interactions pour réaliser des tests fonctionnels complets
 
         </li>
     </ul>
@@ -361,7 +362,7 @@
 
                     </li>
                     <li>
-                        Evolution rapide et massive
+                        Evolution rapide
                     </li>
                 </ul>
 
